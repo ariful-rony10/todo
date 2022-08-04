@@ -41,6 +41,7 @@ const createOneTodo = async (req, res) => {
 const createManyTodo = (req, res) => {
     try {
 
+
         res.status(200).json()
     } catch (error) {
         res.status(500).json({ message: "Can't get all todos! - please try again later." })
@@ -49,12 +50,22 @@ const createManyTodo = (req, res) => {
 }
 
 // Update a todo
-const updateOneTodo = (req, res) => {
+const updateOneTodo = async (req, res) => {
     try {
-
-        res.status(200).json()
+        const result = await Todo.findByIdAndUpdate(
+            { _id: req.params.id },
+            {
+                $set:
+                {
+                    status: "inactive"
+                }
+            },
+            { new: true }
+        )
+        // console.log(result);
+        res.status(200).json({ message: "Updated sucessfully!", data: result })
     } catch (error) {
-        res.status(500).json({ message: "Can't get all todos! - please try again later." })
+        res.status(500).json({ message: "Opps! cant update todo - please try again later." })
 
     }
 }
