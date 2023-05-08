@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import CustomForm from './components/CustomForm';
 
 function App() {
+  const [task, setTask] = useState([]);
+
   const addTask = (task) => {
     console.log(task);
+    setTask((prevState) => [...prevState, task]);
   };
 
   return (
