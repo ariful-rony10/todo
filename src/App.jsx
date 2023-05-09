@@ -2,9 +2,10 @@ import { useState } from 'react';
 import CustomForm from './components/CustomForm';
 import TaskList from './components/TaskList';
 import EditForm from './components/EditForm';
+import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useLocalStorage('react-todo.tasks', []);
   const [editedTask, setEditedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [previousFocusEl, setPreviousFocusEl] = useState(null);
@@ -28,7 +29,6 @@ function App() {
     setTasks((prevState) =>
       prevState.map((t) => (t.id === task.id ? { ...t, name: task.name } : t))
     );
-    // TODO: close the edit mode
     closeEditMode();
   };
 
