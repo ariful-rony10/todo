@@ -1,9 +1,21 @@
 import { useState } from 'react';
 
 import { CheckIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { useEffect } from 'react';
 
-const EditForm = ({ editedTask, updateTask }) => {
+const EditForm = ({ editedTask, updateTask, closeEditMode }) => {
   const [updatedTaskName, setUpdatedTaskName] = useState(editedTask.name);
+
+  useEffect(() => {
+    const closeModelIfEscaped = (e) => {
+      e.key === 'Escape' && closeEditMode();
+    };
+    window.addEventListener('keydown', closeModelIfEscaped);
+
+    return () => {
+      window.removeEventListener('keydown', closeModelIfEscaped);
+    };
+  }, []);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
